@@ -37,14 +37,12 @@ async def analyze(pdf: UploadFile = File(...), pointers: str = Form(...)) -> Dic
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid pointers JSON: {e}")
 
-    # Save uploaded PDF
     filename = os.path.basename(pdf.filename)
     save_path = os.path.join(UPLOAD_DIR, filename)
     content = await pdf.read()
     with open(save_path, "wb") as f:
         f.write(content)
 
-    # Extract text per page
     pages = extractor.extract_pages(save_path)
 
     results = {}

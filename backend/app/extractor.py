@@ -1,8 +1,8 @@
 import re
 from typing import List, Dict, Any
-import fitz  # PyMuPDF
+import fitz  
 
-# Simple helper to show snippet around a span
+
 def snippet_around(text: str, start: int, end: int, radius: int = 60) -> str:
     s = max(0, start - radius)
     e = min(len(text), end + radius)
@@ -10,7 +10,6 @@ def snippet_around(text: str, start: int, end: int, radius: int = 60) -> str:
 
 class PDFExtractor:
     def __init__(self):
-        # regexes for common facts
         self.date_regex = re.compile(
             r"\b(?:\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}[\-]\d{1,2}[\-]\d{1,2}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?,?\s+\d{1,2},?\s+\d{2,4})\b",
             re.I,
@@ -62,7 +61,6 @@ class PDFExtractor:
         return matches
 
     def generic_search(self, query: str, pages: List[str]) -> List[Dict[str, Any]]:
-        # Split query into important terms; search for each term and return surrounding snippet
         terms = [t for t in re.split(r"\W+", query) if len(t) > 2]
         results = []
         seen = set()
@@ -77,7 +75,6 @@ class PDFExtractor:
 
     def handle_pointer(self, pointer: str, pages: List[str]) -> List[Dict[str, Any]]:
         p = pointer.lower()
-        # Rule-based handlers
         if any(k in p for k in ["date", "dates"]):
             matches = self.find_all_regex(self.date_regex, pages)
             return matches if matches else [{"snippet": "", "page": None, "start_char": None, "end_char": None, "rationale": "No date-like pattern found; try a different pointer or supply examples."}]
@@ -87,14 +84,11 @@ class PDFExtractor:
             return matches if matches else [{"snippet": "", "page": None, "start_char": None, "end_char": None, "rationale": "No currency/amount pattern found."}]
 
         if any(k in p for k in ["who signed", "signed", "signature", "signatory"]):
-            # heuristic: look for signature keywords or lines with "for <Party>" preceding signature
             results = []
-            # find explicit signature keywords
             for kw in self.signature_keywords:
                 results += self.find_keyword_context(kw, pages)
-            # Also look for lines with a name followed by 'Director'/'Manager' etc.
             title_re = re.compile(r"([A-Z][a-z]+(?:\s[A-Z][a-z]+){0,2})\s*,?\s*(Director|Manager|CEO|CFO|Partner|Proprietor)", re.I)
-            # search pages
+            
             for i, page_text in enumerate(pages):
                 for m in title_re.finditer(page_text):
                     start, end = m.span()
@@ -106,7 +100,7 @@ class PDFExtractor:
                         "rationale": "Possible signatory line (name + title)",
                     })
             if results:
-                # dedupe by span
+                
                 seen = set()
                 out = []
                 for r in results:
@@ -117,7 +111,7 @@ class PDFExtractor:
                 return out
             return [{"snippet": "", "page": None, "start_char": None, "end_char": None, "rationale": "No likely signature lines found."}]
 
-        # Fallback: generic search using important terms
+        
         generic = self.generic_search(pointer, pages)
         if generic:
             return generic
