@@ -1,12 +1,15 @@
 # Python virtual environment
 myvenv/
 .venv/
+venv/
+env/
 .env/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.log
+*.env
 
 # IDE and OS files
 .vscode/
@@ -17,3 +20,14 @@ __pycache__/
 build/
 dist/
 *.egg-info/
+
+# Node.js / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log*
+.next/
+out/
