@@ -2,7 +2,7 @@
 
 A full-stack web application that extracts requested facts from a PDF document. Users can upload a PDF, specify pointers like “List all dates” or “Who signed?”, and receive structured results with snippets, page numbers, and rationales.
 
-# 📂 Repository Structure
+# Repository Structure
 ```bash
     pdf-facts-analyzer/
     │
@@ -28,7 +28,7 @@ A full-stack web application that extracts requested facts from a PDF document. 
     └─ README.md
 ```
 
-# 🚀 Features
+# Features
 ## Backend (FastAPI)
 
 Accepts PDF upload and JSON array of pointers.
@@ -50,8 +50,8 @@ Displays results per pointer:
 Uses React functional components and a Results component for rendering output.
 Clean, modern UI with glassmorphic form card and styled results.
 
-# ⚙️ Setup Instructions
-## 1️⃣ Backend Setup
+# Setup Instructions
+## 1 Backend Setup
 ```bash
 cd backend
 python -m venv .venv
@@ -64,7 +64,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 API docs: http://localhost:8000/docs
 
-## 2️⃣ Frontend Setup
+## 2 Frontend Setup
 ```bash
 cd frontend
 npm install
@@ -72,7 +72,7 @@ npm run dev
 ```
 Open in browser: http://localhost:3000
 
-## 📝 Usage
+## Usage
 
 1.Open frontend at http://localhost:3000
 2.Upload a text-based PDF
@@ -85,17 +85,17 @@ Total contract value?
 4.Click Analyze
 5.View results in expandable cards with snippet, page number, offsets, and rationale.
 
-## ⚡ Tech Stack
+## Tech Stack
 Backend: Python, FastAPI, PyMuPDF (fitz), Uvicorn
 Frontend: Next.js, React Hooks, Vanilla CSS
 State Management: React useState
 Storage: Local uploads (can switch to cloud storage)
 Communication: REST API (JSON)
 
-## 🧩 Notes
+## Notes
 Works only with text-based PDFs, not scanned images (no OCR).
 Ensure backend is running at http://localhost:8000
  before using frontend.
 
-## 🫱 Author
+##  Author
 # Bittu Jaiswal – Full-stack developer & PDF enthusiast
