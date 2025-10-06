@@ -98,4 +98,4 @@ Ensure backend is running at http://localhost:8000
  before using frontend.
 
 ##  Author
-# Bittu Jaiswal – Full-stack developer & PDF enthusiast
+# Bittu Jaiswal 
